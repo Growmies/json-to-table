@@ -2,9 +2,9 @@ var traverse    = require('traverse');
 var dottie      = require('dottie');
 var _ 		= require('lodash');
 
-exports.module = function transformJSONToTable(docs) {
+module.exports = function transformJSONToTable(docs) {
   // Go through each object, find the deepest path
-  // Creat an array of all of the possible paths
+  // Create an array of all of the possible paths
   var headers = _.keys(traverse(docs).reduce(
                       function(headers, value) {
                         if (this.isLeaf) {
