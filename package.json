@@ -1,0 +1,29 @@
+{
+  "name": "json-to-table",
+  "version": "1.0.0",
+  "description": "Convert an array of Objects into a table",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Growmies/json-to-table.git"
+  },
+  "keywords": [
+    "json",
+    "table",
+    "convert"
+  ],
+  "author": "Scott",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Growmies/json-to-table/issues"
+  },
+  "homepage": "https://github.com/Growmies/json-to-table",
+  "dependencies": {
+    "dottie": "^0.2.6",
+    "lodash": "^2.4.1",
+    "traverse": "^0.6.6"
+  }
+}
