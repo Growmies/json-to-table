@@ -2,7 +2,11 @@ var traverse    = require('traverse');
 var dottie      = require('dottie');
 var _ 		= require('lodash');
 
-module.exports = function transformJSONToTable(docs) {
+module.exports = function transformJSONToTable(docs, defaultVal) {
+  if(arguments.length === 1) {
+    defaultVal = '';
+  }
+
   // Go through each object, find the deepest path
   // Create an array of all of the possible paths
   var headers = _.keys(traverse(docs).reduce(
@@ -22,7 +26,7 @@ module.exports = function transformJSONToTable(docs) {
   var data = [headers];
   data = data.concat(_.map(docs, function(doc) {
                 return _.map(headers, function(header) {
-                  return dottie.get(doc, header, '');
+                  return dottie.get(doc, header, defaultVal);
                 })
               }));
 

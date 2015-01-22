@@ -25,14 +25,38 @@ var tabled = jsonToTable(myRecords);
 
 //tabled will be an array of arrays like this
 //[
-//['name','address.zip','address.state', 'address.street'],
-//['Bob',12345,'Euphoria',''],
-//['Jon','','1234 Main St.','Arizona']
+//['name', 'address.zip', 'address.state', 'address.street'],
+//['Bob', 12345, 'Euphoria', ''],
+//['Jon', '', '1234 Main St.', 'Arizona']
 //]
 ```
 
 ##Notes
 If a particular object did not have the key/value that another one did, the default will be an empty string. 
+You can change the default value by passing that in as the second parameter of the function call. 
+If you explicitly pass undefined in as the second value, your defaults will be undefined.
+
+```Javascript
+var jsonToTable = require('json-to-table');
+
+var myRecords = [
+{
+    name:'Bob',
+    address:{zip:12345, state:'Euphoria'}
+},
+{
+    name:'Jon',
+    address:{street:'1234 Main St.', state:'Arizona'}
+}];
+var tabled = jsonToTable(myRecords, 'MY_DEFAULT_STR!!');
+
+//tabled will be an array of arrays like this
+//[
+//['name', 'address.zip', 'address.state', 'address.street'],
+//['Bob', 12345, 'Euphoria', 'MY_DEFAULT_STR!!'],
+//['Jon', 'MY_DEFAULT_STR!!', '1234 Main St.', 'Arizona']
+//]
+```
 
 Also note that in this example, the address.zip was a number, and stayed a number. 
 
