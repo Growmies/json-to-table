@@ -34,7 +34,7 @@ var tabled = jsonToTable(myRecords);
 ##Notes
 If a particular object did not have the key/value that another one did, the default will be an empty string. 
 You can change the default value by passing that in as the second parameter of the function call. 
-If you explicitly pass undefined in as the second value, your defaults will be undefined.
+If you explicitly pass ```Javascript undefined``` in as the second value, your defaults will be undefined.
 
 ```Javascript
 var jsonToTable = require('json-to-table');
