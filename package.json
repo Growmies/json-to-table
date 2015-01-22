@@ -15,7 +15,11 @@
     "table",
     "convert"
   ],
-  "author": "Scott",
+  "author": "Scott Hillman <hillmanov@gmail.com>",
+  "contributors": [
+    "Scott Hillman <hillmanov@gmail.com>",
+    "Joey Cozza <joeycozza@gmail.com>"
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Growmies/json-to-table/issues"
