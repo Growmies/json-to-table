@@ -24,7 +24,11 @@ var myRecords = [
 var tabled = jsonToTable(myRecords);
 
 //tabled will be an array of arrays like this
-//[['name','address.zip','address.state', 'address.street'],['Bob',12345,'Euphoria',''],['Jon','','1234 Main St.','Arizona']]
+//[
+//['name','address.zip','address.state', 'address.street'],
+//['Bob',12345,'Euphoria',''],
+//['Jon','','1234 Main St.','Arizona']
+//]
 ```
 
 ##Notes
