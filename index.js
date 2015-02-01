@@ -34,6 +34,9 @@ module.exports = function transformJSONToTable(docs, options) {
   var data = [headers];
   data = data.concat(_.map(docs, function(doc) {
                 return _.map(headers, function(header) {
+                  if (options.checkKeyBeforePath && doc[header]) {
+                    return doc[header];
+                  }
                   return dottie.get(doc, header, options.defaultVal);
                 })
               }));

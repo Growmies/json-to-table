@@ -247,4 +247,38 @@ describe('Basic usage', function() {
 
     assert(_.isEqual(tableData, expectedTableData));
   });
+
+  it('Should treat strings surround with tick marks as column name, not as a path', function() {
+     var jsonData = [
+      {
+        firstName: 'Scott',
+        lastName: 'Hillman',
+        phoneNumber: '801-555-5555',
+        email: 'scott@grow.com',
+        title: 'Master runner',
+        'friends.length': 5
+      },
+      {
+        firstName: 'Burt',
+        lastName: 'Macklin',
+        phoneNumber: '801-555-5555',
+        email: 'burt@fbi.gov',
+      },
+      {
+        firstName: 'Ron',
+        lastName: 'Swanson',
+        phoneNumber: '801-555-5555',
+        email: 'ron@pawnee.gov',
+        'friends.length': 6
+      }
+    ];
+
+    var tableData = jsonToTable(jsonData, { defaultVal: undefined, checkKeyBeforePath: true }),
+        expectedTableData = [ [ 'firstName', 'lastName', 'phoneNumber',  'email',          'title',         'friends.length' ],
+                              [ 'Scott',     'Hillman',  '801-555-5555', 'scott@grow.com', 'Master runner', 5 ],
+                              [ 'Burt',      'Macklin',  '801-555-5555', 'burt@fbi.gov',   undefined,       undefined ],
+                              [ 'Ron',       'Swanson',  '801-555-5555', 'ron@pawnee.gov', undefined,       6 ] ];
+
+    assert(_.isEqual(tableData, expectedTableData));
+  });
 });
