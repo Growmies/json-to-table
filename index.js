@@ -6,6 +6,10 @@ module.exports = function transformJSONToTable(docs, options) {
   options            = options || {};
   options.defaultVal = _.has(options, 'defaultVal') ? options.defaultVal : '';
 
+  if (_.isPlainObject(docs)) {
+    docs = _.flatten([docs]);
+  }
+
   // Go through each object, find the deepest path
   // Create an array of all of the possible paths
   var headers = _.keys(traverse(docs).reduce(

@@ -281,4 +281,22 @@ describe('Basic usage', function() {
 
     assert(_.isEqual(tableData, expectedTableData));
   });
+
+  it('Should work as you would expect on a plain object', function() {
+
+    var jsonData = {
+      firstName: 'Scott',
+      lastName: 'Hillman',
+      phoneNumber: '801-555-5555',
+      email: 'scott@grow.com',
+      title: 'Master runner',
+    };
+
+    var tableData = jsonToTable(jsonData),
+        expectedTableData = [ [ 'firstName', 'lastName', 'phoneNumber',  'email',          'title',        ],
+                              [ 'Scott',     'Hillman',  '801-555-5555', 'scott@grow.com', 'Master runner' ]
+                            ];
+
+    assert(_.isEqual(tableData, expectedTableData));
+  });
 });
