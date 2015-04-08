@@ -14,6 +14,7 @@ module.exports = function transformJSONToTable(docs, options) {
   // Create an array of all of the possible paths
   var headers = _.keys(traverse(docs).reduce(
                       function(headers, value) {
+                        var self = this;
                         if (this.notRoot && _.isArray(value)) {
                           if (options.includeCollectionLength) {
                             headers[_.rest(this.path).join('.') + '.length'] = true;
@@ -23,12 +24,15 @@ module.exports = function transformJSONToTable(docs, options) {
                           }
                         }
                         if (this.isLeaf) {
+                          this.path = _.map(this.path, function(level) {
+                            if (level.indexOf('.') > -1 && self.level > 2) { // If a leaf contains a dot in it, then surround the whole path with ticks
+                              level = '`'  + level + '`';
+                            }
+                            return level;
+                          });
                           if (!(_.isPlainObject(value) && _.keys(value).length === 0)) { // Check against empty objects. Don't treat these paths as a valid header value.
                             headers[_.rest(this.path).join('.')] = true;
                           }
-                          // Make sure that we don't include empty objects as valid headers
-                          // There are good reasons behind this that deal with projections, and non-homogenous objects in a collection.
-
                         }
                         return headers;
                       }, {})
@@ -40,6 +44,13 @@ module.exports = function transformJSONToTable(docs, options) {
                 return _.map(headers, function(header) {
                   if (options.checkKeyBeforePath && doc[header]) {
                     return doc[header];
+                  }
+                  if (header.indexOf('`') > -1) { // One of those special cases where a path is nested, AND has a dot in the name.
+                    var parts = header.split('.`'),
+                        head  = parts[0].replace(/\`/g, ''),
+                        tail  = parts[1].replace(/\`/g, '');
+
+                    return dottie.get(doc, head, {})[tail];
                   }
                   return dottie.get(doc, header, options.defaultVal);
                 })
