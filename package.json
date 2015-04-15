@@ -1,6 +1,6 @@
 {
   "name": "json-to-table",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Convert an array of Objects into a table format",
   "main": "index.js",
   "scripts": {
