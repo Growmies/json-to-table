@@ -1,6 +1,5 @@
-var traverse = require('traverse'),
-    dottie   = require('dottie'),
-    _        = require('lodash');
+var traverse = require('traverse');
+var _        = require('lodash');
 
 module.exports = function transformJSONToTable(docs, options) {
   options            = options || {};
@@ -50,10 +49,10 @@ module.exports = function transformJSONToTable(docs, options) {
                         head  = parts[0].replace(/\`/g, ''),
                         tail  = parts[1].replace(/\`/g, '');
 
-                    return dottie.get(doc, head, {})[tail];
+                    return _.get(doc, head, {})[tail];
                   }
-                  return dottie.get(doc, header, options.defaultVal);
-                })
+                  return _.get(doc, header, options.defaultVal);
+                });
               }));
 
   return data;

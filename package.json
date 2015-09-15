@@ -1,6 +1,6 @@
 {
   "name": "json-to-table",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Convert an array of Objects into a table format",
   "main": "index.js",
   "scripts": {
@@ -26,8 +26,7 @@
   },
   "homepage": "https://github.com/Growmies/json-to-table",
   "dependencies": {
-    "dottie": "^0.2.6",
-    "lodash": "^2.4.1",
+    "lodash": "^3.10.1",
     "traverse": "^0.6.6"
   },
   "devDependencies": {
