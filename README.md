@@ -26,14 +26,25 @@ var tabled = jsonToTable(myRecords);
 //tabled will be an array of arrays like this
 //[
 //['name', 'address.zip', 'address.state', 'address.street'],
-//['Bob', 12345, 'Euphoria', ''],
-//['Jon', '', '1234 Main St.', 'Arizona']
+//['Bob',  12345,         'Euphoria',      ''],
+//['Jon',  '',            '1234 Main St.', 'Arizona']
 //]
 ```
 
+##Options
+Some available options to pass in as the second argument are as follows.  
+Look at the tests to see all of these options in action.  
+```
+{
+  defaultValue: put whatever you want here //defaults to an empty string
+  includeCollectionLength: if there is a subarray within the object, it will create a header and include that length //defaults to false
+  excludeSubArrays: if there is a subarray within the object, it will remove it completely from the resulting table. //defaults to false
+  checkKeyBeforePath: this will check for a key that has a '.' in it before assuming the '.' means to look deeper in the object //defaults to false
+}
+```
 ##Notes
-If a particular object did not have the key/value that another one did, the default will be an empty string. 
-You can change the default value by passing that in as the second parameter of the function call. 
+If a particular object did not have a key that another one did, the default will be an empty string. 
+You can change the default value by passing an option in as the second parameter of the function call. 
 If you explicitly pass ```undefined``` in as the second value, your defaults will be undefined.
 
 ```Javascript
@@ -52,9 +63,9 @@ var tabled = jsonToTable(myRecords, 'MY_DEFAULT_STR!!');
 
 //tabled will be an array of arrays like this
 //[
-//['name', 'address.zip', 'address.state', 'address.street'],
-//['Bob', 12345, 'Euphoria', 'MY_DEFAULT_STR!!'],
-//['Jon', 'MY_DEFAULT_STR!!', '1234 Main St.', 'Arizona']
+//['name', 'address.zip',     'address.state', 'address.street'],
+//['Bob',  12345,             'Euphoria',      'MY_DEFAULT_STR!!'],
+//['Jon',  'MY_DEFAULT_STR!!','Arizona',       '1234 Main St.']
 //]
 ```
 
