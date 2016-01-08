@@ -5,7 +5,7 @@ The column headers are all the possible "leaves" of the javascript objects.
 
 ##Install
 ```
-npm install node-to-table
+npm install json-to-table
 ```
 
 ##Usage
