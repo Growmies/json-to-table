@@ -323,4 +323,24 @@ describe('Basic usage', function() {
 
     assert(_.isEqual(tableData, expectedTableData));
   });
+
+  it('Should be able to resolve the path or key even with multiple dots in the name2.', function() {
+    var jsonData = [
+      {
+        firstName: 'Scott',
+        'phone.number': '801-999-8626'
+      },
+      {
+        firstName: 'Burt',
+        '.ba`d': 'The Pentagon'
+      }
+    ];
+
+    var tableData = jsonToTable(jsonData, { defaultVal: undefined, checkKeyBeforePath: true }),
+        expectedTableData = [ [ 'firstName', 'phone.number', '.ba`d' ],
+                              [ 'Scott',     '801-999-8626',           undefined ],
+                              [ 'Burt',      undefined,                'The Pentagon' ] ];
+
+    assert(_.isEqual(tableData, expectedTableData));
+  });
 });
