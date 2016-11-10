@@ -41,17 +41,24 @@ module.exports = function transformJSONToTable(docs, options) {
   var data = [headers];
   data     = data.concat(_.map(docs, function (doc) {
     return _.map(headers, function (header) {
+      var cellValue;
       if (options.checkKeyBeforePath && doc[header]) {
-        return doc[header];
-      }
-      if (header.indexOf('.`') > -1) { // One of those special cases where a path is nested, AND has a dot in the name.
+        cellValue = doc[header];
+      } else if (header.indexOf('.`') > -1) { // One of those special cases where a path is nested, AND has a dot in the name.
         var parts = header.split('.`');
         var head  = parts[0].replace(/\`/g, '');
         var tail  = parts[1].replace(/\`/g, '');
 
-        return _.get(doc, head, {})[tail];
+        cellValue = _.get(doc, head, {})[tail];
+      } else {
+        cellValue = _.get(doc, header, options.defaultVal);
       }
-      return _.get(doc, header, options.defaultVal);
+
+      if (options.excludeSubArrays && _.isArray(cellValue)) {
+        cellValue = options.defaultVal;
+      }
+
+      return cellValue;
     });
   }));
 
