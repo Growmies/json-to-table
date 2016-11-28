@@ -1,5 +1,5 @@
 #IMPORTANT NOTE
-See the CHANGELOG for explaination of v3 vs v4.
+See the CHANGELOG for explanation of v3 vs v4.
 
 ##Install
 ```
@@ -14,9 +14,9 @@ The column headers are all the possible "leaves" of the javascript objects.
 
 ##Usage
 ```Javascript
-var jsonToTable = require('json-to-table');
+const jsonToTable = require('json-to-table');
 
-var myRecords = [
+const myRecords = [
 {
     name:'Bob',
     address:{zip:12345, state:'Euphoria'}
@@ -25,7 +25,7 @@ var myRecords = [
     name:'Jon',
     address:{street:'1234 Main St.', state:'Arizona'}
 }];
-var tabled = jsonToTable(myRecords);
+const tabled = jsonToTable(myRecords);
 
 //tabled will be an array of arrays like this
 //[
@@ -52,9 +52,9 @@ You can change the default value by passing an option in as the second parameter
 If you explicitly pass ```undefined``` in as the second value, your defaults will be undefined.
 
 ```Javascript
-var jsonToTable = require('json-to-table');
+const jsonToTable = require('json-to-table');
 
-var myRecords = [
+const myRecords = [
 {
     name:'Bob',
     address:{zip:12345, state:'Euphoria'}
@@ -63,7 +63,7 @@ var myRecords = [
     name:'Jon',
     address:{street:'1234 Main St.', state:'Arizona'}
 }];
-var tabled = jsonToTable(myRecords, 'MY_DEFAULT_STR!!');
+const tabled = jsonToTable(myRecords, 'MY_DEFAULT_STR!!');
 
 //tabled will be an array of arrays like this
 //[
