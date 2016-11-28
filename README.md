@@ -1,12 +1,16 @@
-json-to-table converts an array of Javascript objects into a table format.
-
-The column headers are all the possible "leaves" of the javascript objects.
-
+#IMPORTANT NOTE
+See the CHANGELOG for explaination of v3 vs v4.
 
 ##Install
 ```
 npm install json-to-table
 ```
+
+##Info
+json-to-table converts an array of Javascript objects into a table format.
+
+The column headers are all the possible "leaves" of the javascript objects.
+
 
 ##Usage
 ```Javascript
