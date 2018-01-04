@@ -1,6 +1,6 @@
 const assert      = require('chai').assert;
-const    mocha       = require('mocha');
-const    _           = require('lodash');
+const mocha       = require('mocha');
+const _isEqual    = require('lodash.isequal');
 const jsonToTable = require('../');
 
 describe('Basic usage', function () {
@@ -33,7 +33,7 @@ describe('Basic usage', function () {
       ['Burt', 'Macklin', '801-555-5555', 'burt@fbi.gov'],
       ['Ron', 'Swanson', '801-555-5555', 'ron@pawnee.gov']];
 
-    assert(_.isEqual(tableData, expectedTableData));
+    assert(_isEqual(tableData, expectedTableData));
   });
 
   it('Should take a array of JSON object with nested properties and create a table', function () {
@@ -76,7 +76,7 @@ describe('Basic usage', function () {
           [2, 'fbi agent', 'Burt', 'Macklin', '801-555-5555', 'burt@fbi.gov'],
           [3, 'government employee', 'Ron', 'Swanson', '801-555-5555', 'ron@pawnee.gov']];
 
-    assert(_.isEqual(tableData, expectedTableData));
+    assert(_isEqual(tableData, expectedTableData));
   });
 
   it('Should take an array of non-homogenous JSON objects and create a table', function () {
@@ -113,7 +113,7 @@ describe('Basic usage', function () {
           [2, '', '', '', '801-555-5555', 'burt@fbi.gov'],
           ['', 'government employee', 'Ron', 'Swanson', '', '']];
 
-    assert(_.isEqual(tableData, expectedTableData));
+    assert(_isEqual(tableData, expectedTableData));
   });
 
   it('Should take an array with sub-arrays and include the length of that array', function () {
@@ -146,7 +146,7 @@ describe('Basic usage', function () {
       ['Scott', 'Hillman', '801-555-5555', 'scott@grow.com', 5, 'Trent', 'Andrew', 'Joey', 'Ryan', 'Rob', ['Trent', 'Andrew', 'Joey', 'Ryan', 'Rob']],
       ['Burt', 'Macklin', '801-555-5555', 'burt@fbi.gov', 2, 'April', 'Leslie', '', '', '', ['April', 'Leslie']],
       ['Ron', 'Swanson', '801-555-5555', 'ron@pawnee.gov', 0, '', '', '', '', '', []]];
-    assert(_.isEqual(tableData, expectedTableData));
+    assert(_isEqual(tableData, expectedTableData));
   });
 
   it('Should take an array with sub-arrays and include the length of that array, but not include the array itself', function () {
@@ -180,7 +180,7 @@ describe('Basic usage', function () {
           ['Burt', 'Macklin', '801-555-5555', 'burt@fbi.gov', 2],
           ['Ron', 'Swanson', '801-555-5555', 'ron@pawnee.gov', 1]];
 
-    assert(_.isEqual(tableData, expectedTableData));
+    assert(_isEqual(tableData, expectedTableData));
   });
 
   it('Should properly handle a default value', function () {
@@ -212,7 +212,7 @@ describe('Basic usage', function () {
           ['Burt', 'Macklin', '801-555-5555', 'burt@fbi.gov', 'None'],
           ['Ron', 'Swanson', '801-555-5555', 'ron@pawnee.gov', 'None']];
 
-    assert(_.isEqual(tableData, expectedTableData));
+    assert(_isEqual(tableData, expectedTableData));
   });
 
   it('Should take undefined as a valid default value', function () {
@@ -245,7 +245,7 @@ describe('Basic usage', function () {
           ['Ron', 'Swanson', '801-555-5555', 'ron@pawnee.gov', undefined]];
 
 
-    assert(_.isEqual(tableData, expectedTableData));
+    assert(_isEqual(tableData, expectedTableData));
   });
 
   it('Should treat strings surround with tick marks as column name, not as a path', function () {
@@ -279,7 +279,7 @@ describe('Basic usage', function () {
           ['Burt', 'Macklin', '801-555-5555', 'burt@fbi.gov', undefined, undefined],
           ['Ron', 'Swanson', '801-555-5555', 'ron@pawnee.gov', undefined, 6]];
 
-    assert(_.isEqual(tableData, expectedTableData));
+    assert(_isEqual(tableData, expectedTableData));
   });
 
   it('Should work as you would expect on a plain object', function () {
@@ -297,7 +297,7 @@ describe('Basic usage', function () {
           ['Scott', 'Hillman', '801-555-5555', 'scott@grow.com', 'Master runner']
         ];
 
-    assert(_.isEqual(tableData, expectedTableData));
+    assert(_isEqual(tableData, expectedTableData));
   });
 
   it('Should be able to resolve the path or key even with multiple dots in the name.', function () {
@@ -321,7 +321,7 @@ describe('Basic usage', function () {
           ['Scott', '801-999-8626', undefined],
           ['Burt', undefined, 'The Pentagon']];
 
-    assert(_.isEqual(tableData, expectedTableData));
+    assert(_isEqual(tableData, expectedTableData));
   });
 
   it('Should be able to resolve the path or key even with multiple dots in the name2.', function () {
@@ -341,7 +341,7 @@ describe('Basic usage', function () {
           ['Scott', '801-999-8626', undefined],
           ['Burt', undefined, 'The Pentagon']];
 
-    assert(_.isEqual(tableData, expectedTableData));
+    assert(_isEqual(tableData, expectedTableData));
   });
 
   it('Should handle when a nested array has data for 1 object, but is null (which means is a leaf) in another object - keeping old behavior to not break the 80,000 existing metrics', function () {
@@ -380,7 +380,7 @@ describe('Basic usage', function () {
                             [2,     '',              '',                  '',                 '801-555-5555',         'burt@fbi.gov',  ['joey']],
                             ['',    'government emp','Ron',               'Swanson',          '',                     '',              null]];
 
-    assert(_.isEqual(tableData, expectedTableData));
+    assert(_isEqual(tableData, expectedTableData));
   });
 
   it('Should handle when an array has data for 1 object, but is a primitive (which means is a leaf) in another object - keeping old behavior to not break the 80,000 existing metrics', function () {
@@ -403,8 +403,8 @@ describe('Basic usage', function () {
                                 [1,    'joey',      ['joey']],
                                 [2,    '',          true]];
 
-    assert(_.isEqual(tableData1, expectedTableData1));
-    assert(_.isEqual(tableData2, expectedTableData2));
+    assert(_isEqual(tableData1, expectedTableData1));
+    assert(_isEqual(tableData2, expectedTableData2));
   });
 
   it('Should handle when a nested object has data for 1 object, but is a primitive (which means is a leaf) in another object', function () {
@@ -429,8 +429,8 @@ describe('Basic usage', function () {
       [1, 'joey', {name: 'joey'}],
       [2, '', 5]];
 
-    assert(_.isEqual(tableData1, expectedTableData1));
-    assert(_.isEqual(tableData2, expectedTableData2));
+    assert(_isEqual(tableData1, expectedTableData1));
+    assert(_isEqual(tableData2, expectedTableData2));
   });
 
 
