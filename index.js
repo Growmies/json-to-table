@@ -1,35 +1,42 @@
-const traverse = require('traverse');
-const _        = require('lodash');
+const traverse       = require('traverse');
+const _tail          = require('lodash.tail');
+const _map           = require('lodash.map');
+const _has           = require('lodash.has');
+const _flatten       = require('lodash.flatten');
+const _isPlainObject = require('lodash.isplainobject');
+const _keys          = require('lodash.keys');
+const _isArray       = require('lodash.isarray');
+const _get           = require('lodash.get');
 
 module.exports = function transformJSONToTable(docs, options = {}) {
-  options.defaultVal = _.has(options, 'defaultVal') ? options.defaultVal : '';
+  options.defaultVal = _has(options, 'defaultVal') ? options.defaultVal : '';
 
-  if (_.isPlainObject(docs)) {
-    docs = _.flatten([docs]);
+  if (_isPlainObject(docs)) {
+    docs = _flatten([docs]);
   }
 
   // Go through each object, find the deepest path
   // Create an array of all of the possible paths
-  let allHeaders = _.keys(traverse(docs).reduce(
+  let allHeaders = _keys(traverse(docs).reduce(
     function (headers, value) {
       const self = this;
-      if (this.notRoot && _.isArray(value)) {
+      if (this.notRoot && _isArray(value)) {
         if (options.includeCollectionLength) {
-          headers[`${_.tail(this.path).join('.')}.length`] = true;
+          headers[`${_tail(this.path).join('.')}.length`] = true;
         }
         if (options.excludeSubArrays) {
           this.update(value, true);
         }
       }
       if (this.isLeaf) {
-        this.path = _.map(this.path, level => {
+        this.path = _map(this.path, level => {
           if (level.indexOf('.') > -1 && self.level > 2) { // If a leaf contains a dot in it, then surround the whole path with ticks
             level = `\`${level}\``;
           }
           return level;
         });
-        if (!(_.isPlainObject(value) && _.keys(value).length === 0)) { // Check against empty objects. Don't treat these paths as a valid header value.
-          headers[_.tail(this.path).join('.')] = true;
+        if (!(_isPlainObject(value) && _keys(value).length === 0)) { // Check against empty objects. Don't treat these paths as a valid header value.
+          headers[_tail(this.path).join('.')] = true;
         }
       }
       return headers;
@@ -38,8 +45,8 @@ module.exports = function transformJSONToTable(docs, options = {}) {
   // Go through each object again, this time, attempt to grab the value
   // At each possible path.
   let tableData = [allHeaders];
-  tableData     = tableData.concat(_.map(docs, doc => {
-    return _.map(allHeaders, header => {
+  tableData     = tableData.concat(_map(docs, doc => {
+    return _map(allHeaders, header => {
       if (options.checkKeyBeforePath && doc[header]) {
         return doc[header];
       }
@@ -48,10 +55,10 @@ module.exports = function transformJSONToTable(docs, options = {}) {
         const head  = parts[0].replace(/\`/g, '');
         const tail  = parts[1].replace(/\`/g, '');
 
-        return _.get(doc, head, {})[tail];
+        return _get(doc, head, {})[tail];
       }
 
-      return _.get(doc, header, options.defaultVal);
+      return _get(doc, header, options.defaultVal);
     });
   }));
 
