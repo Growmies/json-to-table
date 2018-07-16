@@ -433,5 +433,52 @@ describe('Basic usage', function () {
     assert(_.isEqual(tableData2, expectedTableData2));
   });
 
+  it('Should return a sub-array as a column value when options.listSubArrays is true. The subarray should not contain objects.', function () {
+    const jsonData = [{
+      id: 1,
+      name: 'Danny Glen',
+      age: 35,
+      luckyNumbers: [3, 57, 2],
+      references: {
+        friends: [{
+          name: 'Manny',
+          phone: '801-555-5555',
+          previousPositions: ['Manager', 'Boss', 'Cool-Guy']
+        },{
+          name: 'Sandy',
+          phone: '801-555-5555',
+          previousPositions: ['Lemonade Stand Tycoon']
+        }
+        ]
+      }
+    }, 
+    {
+      id: 2,
+      name: 'Harry Berry',
+      age: 52,
+      luckyNumbers: [37, 13, 89],
+      references: {
+        friends: [{
+          name: 'Mary',
+          phone: '801-555-5555',
+          previousPositions: ['Burger Flipper Connoisseur']
+        },{
+          name: 'Carrie',
+          phone: '801-555-5555',
+          previousPositions: ['The Smart One']
+        }
+        ]
+      }
+    }]
+
+    const tableData1 = jsonToTable(jsonData, {listSubArrays: true})
+    const expectedTableData1 = [ [ 'id', 'name', 'age', 'luckyNumbers', 'references.friends.0.name', 'references.friends.0.phone', 'references.friends.0.previousPositions', 'references.friends.1.name', 'references.friends.1.phone', 'references.friends.1.previousPositions' ], [ 1, 'Danny Glen', 35, [ 3, 57, 2 ], 'Manny', '801-555-5555', [ 'Manager', 'Boss', 'Cool-Guy' ], 'Sandy', '801-555-5555', [ 'Lemonade Stand Tycoon' ] ], [ 2, 'Harry Berry', 52, [ 37, 13, 89 ], 'Mary', '801-555-5555', [ 'Burger Flipper Connoisseur' ], 'Carrie', '801-555-5555', [ 'The Smart One' ] ] ]
+
+    const tableData2 = jsonToTable(jsonData)
+    const expectedTableData2 = [ [ 'id', 'name', 'age', 'luckyNumbers.0', 'luckyNumbers.1', 'luckyNumbers.2', 'references.friends.0.name', 'references.friends.0.phone', 'references.friends.0.previousPositions.0', 'references.friends.0.previousPositions.1', 'references.friends.0.previousPositions.2', 'references.friends.1.name', 'references.friends.1.phone', 'references.friends.1.previousPositions.0' ], [ 1, 'Danny Glen', 35, 3, 57, 2, 'Manny', '801-555-5555', 'Manager', 'Boss', 'Cool-Guy', 'Sandy', '801-555-5555', 'Lemonade Stand Tycoon' ], [ 2, 'Harry Berry', 52, 37, 13, 89, 'Mary', '801-555-5555', 'Burger Flipper Connoisseur', '', '', 'Carrie', '801-555-5555', 'The Smart One' ] ]
+
+    assert(_.isEqual(tableData1, expectedTableData1));
+    assert(_.isEqual(tableData2, expectedTableData2));
+  })
 
 });
