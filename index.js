@@ -20,6 +20,10 @@ module.exports = function transformJSONToTable(docs, options = {}) {
         if (options.excludeSubArrays) {
           this.update(value, true);
         }
+        if (options.listSubArrays && !_.isPlainObject(value[0])) {
+          headers[_.tail(this.path).join('.')] = true;
+          this.update(value, true)
+        }
       }
       if (this.isLeaf) {
         this.path = _.map(this.path, level => {
