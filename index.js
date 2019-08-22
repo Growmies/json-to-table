@@ -25,6 +25,12 @@ module.exports = function transformJSONToTable(docs, options = {}) {
           this.update(value, true)
         }
       }
+      if (options.stringifyObjects) {
+        if (_.size(this.path) === 2) {
+          headers[_.last(this.path)] = true;
+        }
+        return headers;
+      }
       if (this.isLeaf) {
         this.path = _.map(this.path, level => {
           if (level.indexOf('.') > -1 && self.level > 2) { // If a leaf contains a dot in it, then surround the whole path with ticks
@@ -44,6 +50,9 @@ module.exports = function transformJSONToTable(docs, options = {}) {
   let tableData = [allHeaders];
   tableData     = tableData.concat(_.map(docs, doc => {
     return _.map(allHeaders, header => {
+      if (options.stringifyObjects && doc[header]) {
+        return _.isObject(doc[header]) ? JSON.stringify(doc[header]) : doc[header];
+      }
       if (options.checkKeyBeforePath && doc[header]) {
         return doc[header];
       }
