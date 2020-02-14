@@ -524,4 +524,49 @@ describe('Basic usage', function () {
     ];
     assert(_.isEqual(tableData, expectedTableData));
   });
+
+  it('Should NOT stringify arrays/objects by default', function () {
+    const jsonData = [
+      {
+        id: 1,
+        roleIds: [1,7,9],
+        contact: {
+          firstName: 'Scott',
+          lastName: 'Hillman',
+          phoneNumber: '801-555-5555',
+          email: 'scott@grow.com'
+        }
+      },
+      {
+        id: 2,
+        roleIds: [22],
+        contact: {
+          firstName: 'Burt',
+          lastName: 'Macklin',
+          phoneNumber: '801-555-5555',
+          email: 'burt@fbi.gov'
+        }
+      },
+      {
+        id: 3,
+        roleIds: null,
+        contact: {
+          firstName: 'Ron',
+          lastName: 'Swanson',
+          phoneNumber: '801-555-5555',
+          email: 'ron@pawnee.gov'
+        }
+      }
+    ];
+
+    const tableData = jsonToTable(jsonData);
+    const expectedTableData = [
+      [ 'id', 'roleIds.0', 'roleIds.1', 'roleIds.2', 'contact.firstName', 'contact.lastName', 'contact.phoneNumber', 'contact.email',  'roleIds'   ],
+      [  1,     1,           7,           9,          'Scott',             'Hillman',          '801-555-5555',        'scott@grow.com', [ 1, 7, 9 ] ],
+      [  2,     22,          '',          '',         'Burt',              'Macklin',          '801-555-5555',        'burt@fbi.gov',   [ 22 ]      ],
+      [  3,     '',          '',          '',         'Ron',               'Swanson',          '801-555-5555',        'ron@pawnee.gov',  null       ],
+    ];
+    assert(_.isEqual(tableData, expectedTableData));
+  });
+
 });
