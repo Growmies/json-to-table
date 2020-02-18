@@ -45,6 +45,7 @@ Look at the tests to see all of these options in action.
   excludeSubArrays: if there is a subarray within the object, it will remove it completely from the resulting table. //defaults to false
   checkKeyBeforePath: this will check for a key that has a '.' in it before assuming the '.' means to look deeper in the object //defaults to false
   listSubArrays: if there is a subarray that does not contain objects, it will list the full array instead of breaking it up into individual columns. //defaults to false
+  stringifyObjects: stringify arrays and objects instead of breaking them up into individual columns // defaults to false
 }
 ```
 ##Notes
