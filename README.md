@@ -1,18 +1,18 @@
-#IMPORTANT NOTE
+# IMPORTANT NOTE
 See the CHANGELOG for explanation of v3 vs v4.
 
-##Install
+## Install
 ```
 npm install json-to-table
 ```
 
-##Info
+## Info
 json-to-table converts an array of Javascript objects into a table format.
 
 The column headers are all the possible "leaves" of the javascript objects.
 
 
-##Usage
+## Usage
 ```Javascript
 const jsonToTable = require('json-to-table');
 
@@ -35,7 +35,7 @@ const tabled = jsonToTable(myRecords);
 //]
 ```
 
-##Options
+## Options
 Some available options to pass in as the second argument are as follows.  
 Look at the tests to see all of these options in action.  
 ```
@@ -48,7 +48,7 @@ Look at the tests to see all of these options in action.
   stringifyObjects: stringify arrays and objects instead of breaking them up into individual columns // defaults to false
 }
 ```
-##Notes
+## Notes
 If a particular object did not have a key that another one did, the default will be an empty string. 
 You can change the default value by passing an option in as the second parameter of the function call. 
 If you explicitly pass ```undefined``` in as the second value, your defaults will be undefined.
